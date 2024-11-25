@@ -1,0 +1,45 @@
+jenkins:
+  systemMessage: "TEST Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin"
+        name: "admin"
+        password: ${JENKINS_ADMIN_PASSWORD}
+  slaveAgentPort: 50000
+  viewsTabBar: "standard"
+appearance:
+  themeManager:
+    disableUserThemes: false
+    theme: "dark"
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - basicSSHUserPrivateKey:
+            id: "git-ssh"
+            privateKeySource:
+              directEntry:
+                privateKey: ${readFile:${GIT_SSH_PRIVATE_KEY_PATH}}
+            scope: GLOBAL
+            username: ${GIT_ADMIN_EMAIL}
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+unclassified:
+  gitHubPluginConfig:
+    hookUrl: ${GITHUB_PLUGIN_HOOK_URL}
+  scmGit:
+    addGitTagAction: false
+    allowSecondFetch: false
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    globalConfigEmail: ${GIT_GLOBAL_EMAIL}
+    globalConfigName: ${GIT_GLOBAL_USERNAME}
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false

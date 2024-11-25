@@ -1,0 +1,20 @@
+services:
+  jenkins-master:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    restart: on-failure
+    ports:
+      - 8080:8080
+      - 50000:50000
+    environment:
+      JENKINS_URL: ${JENKINS_URL}
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD}
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs/jenkins.yaml
+      GITHUB_PLUGIN_HOOK_URL: ${GITHUB_PLUGIN_HOOK_URL}
+      GIT_ADMIN_USERNAME: ${GIT_ADMIN_USERNAME}
+      GIT_ADMIN_EMAIL: ${GIT_ADMIN_EMAIL}
+      GIT_SSH_PRIVATE_KEY_PATH: ${GIT_SSH_PRIVATE_KEY_PATH}
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
